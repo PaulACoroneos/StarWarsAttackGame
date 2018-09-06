@@ -1,6 +1,13 @@
 html,body {
     height:100vh;
+    background-image: url("../images/arena.jpg");
+    background-size: cover;
+    color:white;
+    font-family: 'Teko', sans-serif;
 }
 .img-fluid {
     max-width:200px;
+}
+h1 {
+    font-size:84px;
 }
