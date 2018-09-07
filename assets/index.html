@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Teko" rel="stylesheet"> 
 
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <title>Star Wars RPG</title>
   </head>
   <body>
@@ -29,34 +32,38 @@
         <div class="album">
             <div class="row">
                 <div class="col-3 d-flex">
-                    <div class="card mt-2 mb-2 box-shadow p-2 width-100">
+                    <div class="card mt-2 mb-2 box-shadow">
+                        <h5 class="card-title text-center pt-2">ObiWan Kenobi</h5>
                         <img id="ObiWan" class="card-img-top" src="./images/obiwan.jpg">
                         <div class="card-body align-items-top d-flex justify-content-center">
-                            <p class="card-text text-center">ObiWan Kenobi</p>
+                            <span id="obi-health">120</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-3 d-flex">
-                    <div class="card mt-2 mb-2 box-shadow p-2 width-100">
+                    <div class="card mt-2 mb-2 box-shadow">
+                        <h5 class="card-title text-center pt-2">Luke Skywalker</h5>
                         <img src="./images/luke.jpg" class="card-img-top" alt="Luke Skywalker">
                         <div class="card-body align-items-top d-flex justify-content-center">
-                            <p class="card-text text-center">Luke Skywalker</p>
+                            <span id="luke-health">100</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-3 d-flex">
-                    <div class="card mt-2 mb-2 box-shadow p-2 width-100">
+                    <div class="card mt-2 mb-2 box-shadow">
+                        <h5 class="card-title text-center pt-2">Darth Sidious</h5>
                         <img src="./images/darths.jpg" class="card-img-top" alt="Darth Sidious">
                         <div class="card-body align-items-top d-flex justify-content-center">
-                            <p class="card-text text-center">Darth Sidious</p>
+                            <span id="sidious-health">150</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-3 d-flex">
-                    <div class="card mt-2 mb-2 box-shadow p-2 width-100">
+                    <div class="card mt-2 mb-2 box-shadow">
+                        <h5 class="card-title text-center pt-2">Darth Maul</h5>
                         <img src="./images/darthm.jpg" class="card-img-top" alt="Darth Maul">
                         <div class="card-body align-items-top d-flex justify-content-center">
-                            <p class="card-text text-center">Darth Maul</p>
+                            <span id="maul-health">180</span>
                         </div>
                     </div>
                 </div>
