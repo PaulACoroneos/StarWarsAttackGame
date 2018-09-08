@@ -58,12 +58,18 @@ function resolveAttack () {
     //window[userChar].display;
     //window[enemyChar].display.text(enemyHealth);
 
-    if(enemyHealth === 0 && !numEnemies)    //did you defeat the last enemy?
+    if(enemyHealth === 0 && !numEnemies) {
+
+        //did you defeat the last enemy?
         alert("You have defeated all enemies! To reset the game hit restart.");
+        $(".attack").addClass("invisible");
+        $(".reset").removeClass("invisible");
+    }
     else if (!userAlive)
     {
         alert("You were defeated. Press restart to play again.");
-
+        $(".attack").addClass("invisible");
+        $(".reset").removeClass("invisible");
     }
     else if(enemyHealth === 0)
     {
@@ -144,9 +150,7 @@ $(".attack").on("click",function() {
 
 //if reset button is pressed
 $(".reset").on("click",function() {
-    $(".attack").addClass("invisible");
-    $(".reset").removeClass("invisible");
-    reset();    //reset page
+    location.reload();    //reset page
 });
 
 
