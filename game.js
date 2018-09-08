@@ -10,10 +10,10 @@ var userAlive = true;
 var gameStart = 2;
 
 //create character objects
-var obiwan = {attack:15, health:120, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena")};
-var luke = {attack:20, health:100, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena") };
-var maul = {attack:10, health:150, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena")};
-var sidious = {attack:5, health:180, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena")};
+var obiwan = {attack:15, health:120, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena"),enemydisplay:$(".obiwan-enemy")};
+var luke = {attack:20, health:100, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena"),enemydisplay:$(".luke-enemy") };
+var maul = {attack:10, health:150, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena"),enemydisplay:$(".maul-enemy")};
+var sidious = {attack:5, health:180, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena"),enemydisplay:$(".sidious-enemy")};
 
 //One element on page dynamically displays additional information to user.
 var gameStatusDisplay = $("game-status");
@@ -31,9 +31,11 @@ function resolveAttack () {
 
     //increment user character attack by itself
     userAttack += userAttack;
+    console.log("user attack "+ userAttack);
 
     //do user attack first to determine whether we kill the dueling opponent first
     enemyHealth -= userAttack;
+    console.log("enemy health "+ enemyHealth);
 
     if (enemyHealth <= 0) //did we kill the opponent?
     {
@@ -49,15 +51,31 @@ function resolveAttack () {
         }
     }
     //Update user and enemy health display
-    window[userChar].display.text(userHealth);
-    window[enemyChar].display.text(enemyHealth);
+    window[userChar].health = userHealth;
+    window[enemyChar].health = enemyHealth;
+    $("."+ userChar+"-health").text(userHealth);
+    $("."+ enemyChar+"-health").text(enemyHealth);
+    //window[userChar].display;
+    //window[enemyChar].display.text(enemyHealth);
 
     if(enemyHealth === 0 && !numEnemies)    //did you defeat the last enemy?
-        gameStatusDisplay.text("You have defeated " + enemyChar.name +". To reset the game hit restart.");
+        alert("You have defeated all enemies! To reset the game hit restart.");
     else if (!userAlive)
-        gameStatusDisplay.text("You were defeated. Press restart to play again.");
-    else    //else prompt user to fight again
-        gameStatusDisplay.text("You have defeated " + enemyChar.name +". Please select another character to duel.");
+    {
+        alert("You were defeated. Press restart to play again.");
+
+    }
+    else if(enemyHealth === 0)
+    {
+        alert("You have defeated " + window[enemyChar].name +". Please select another character to duel.");
+        
+        //clean up fighter box and allow user to select another character to duel
+        window[enemyChar].enemydisplay.removeClass("d-block"); 
+        window[enemyChar].enemydisplay.addClass("d-none");
+        gameStart = 1;    //okay we can select another character
+    }
+    else
+        gameStart = gameStart;  //i dunno had to fill the else for now
 }
 
 function resetGame() {
@@ -91,8 +109,6 @@ $(".card").on("click",function(key) {
         console.log(userHealth);
         //show chosen div in battle arena as user character
         window[userChar].display.addClass("d-none"); 
-        var arenaName = userChar+"-arena"
-        console.log(arenaName);
         window[userChar].fightdisplay.remove("d-none"); 
         window[userChar].fightdisplay.addClass("d-block");
     }
@@ -109,8 +125,9 @@ $(".card").on("click",function(key) {
             console.log(enemyAttack);
             console.log(enemyHealth);
             window[enemyChar].display.addClass("d-none"); 
+            window[enemyChar].enemydisplay.addClass("d-block"); 
             //make attack button appear
-
+            $(".attack").removeClass("invisible");
         }
     }
     else
@@ -118,12 +135,18 @@ $(".card").on("click",function(key) {
 });
 
 //if attack button is pressed
-$("button").on("click",function() {
+$(".attack").on("click",function() {
 
     if(gameStart !== 0) //should attack button be pressed?
         alert("Please select an enemy or attacker before preceeding.");
     resolveAttack();
 });
 
+//if reset button is pressed
+$(".reset").on("click",function() {
+    $(".attack").addClass("invisible");
+    $(".reset").removeClass("invisible");
+    reset();    //reset page
+});
 
 
