@@ -2,6 +2,7 @@
 var userAttack = 0;
 var userHealth = 0;
 var enemyHealth = 0;
+var enemyAttack = 0;
 var userChar = [];  //character uses selected
 var enemyChar = []; //char enemy selects to fight
 var numEnemies = 3; //3 enemies to fight
@@ -9,10 +10,10 @@ var userAlive = true;
 var gameStart = 2;
 
 //create character objects
-var obiWan = {attack:15, health:120, name:"ObiWan Kenobi",display:$("#obi-health")};
-var luke = {attack:20, health:100, name: "Luke Skywalker", display:$("#obi-health") };
-var maul = {attack:10, health:150, name: "Darth Maul",display:$("#obi-health")};
-var sidious = {attack:5, health:180, name: "Darth Sidious",display:$("#obi-health")};
+var obiwan = {attack:15, health:120, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena")};
+var luke = {attack:20, health:100, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena") };
+var maul = {attack:10, health:150, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena")};
+var sidious = {attack:5, health:180, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena")};
 
 //One element on page dynamically displays additional information to user.
 var gameStatusDisplay = $("game-status");
@@ -39,7 +40,7 @@ function resolveAttack () {
         enemyHealth = 0;    //let's avoid a negative number being display
         numEnemies--;   //number of combatants is reduced
     }
-    else //enemy still alive
+    else {//enemy still alive 
         userHealth -= enemyAttack;
         if (userHealth <= 0)    //did we die?
         {
@@ -48,10 +49,10 @@ function resolveAttack () {
         }
     }
     //Update user and enemy health display
-    userChar.display.text(userHealth);
-    enemyChar.display.text(enemyHealth);
+    window[userChar].display.text(userHealth);
+    window[enemyChar].display.text(enemyHealth);
 
-    if(enemyHealth === 0 && !enemyChars)    //did you defeat the last enemy?
+    if(enemyHealth === 0 && !numEnemies)    //did you defeat the last enemy?
         gameStatusDisplay.text("You have defeated " + enemyChar.name +". To reset the game hit restart.");
     else if (!userAlive)
         gameStatusDisplay.text("You were defeated. Press restart to play again.");
@@ -66,27 +67,63 @@ function resetGame() {
     userAttack = 0;
     userHealth = 0;
     enemyHealth = 0;
+    enemyAttack = 0;
     userChar = [];  //character uses selected
     enemyChar = []; //char enemy selects to fight
     numEnemies = 3; //3 enemies to fight
     userAlive = true;   
-    gameStart = true;
+    gameStart = 2;
 }
 //main game loop
 
 resetGame();    //configure game on page load
 
-//determine which character the user selects, it will be first selection after a RESET
-$("card").on("click",function() {
+//Set user char and enemy
+$(".card").on("click",function(key) {
     if(gameStart === 2)   //first start
     {
+        userChar = this.getAttribute('data-value');  //use object of value of card
+        userAttack = window[userChar].attack;   //object is part of window object, so this works :)
+        userHealth = window[userChar].health;
         gameStart--;
+        console.log(userChar);
+        console.log(userAttack);
+        console.log(userHealth);
+        //show chosen div in battle arena as user character
+        window[userChar].display.addClass("d-none"); 
+        var arenaName = userChar+"-arena"
+        console.log(arenaName);
+        window[userChar].fightdisplay.remove("d-none"); 
+        window[userChar].fightdisplay.addClass("d-block");
     }
     else if (gameStart === 1)
-    {
-        gameStart--;
+    {        
+        if(this.value === userChar) //did user try to select a card twice?
+            alert("Please select a character that is not yours.")
+        else {
+            enemyChar = this.getAttribute('data-value');  //use object of value of card
+            enemyAttack = window[enemyChar].attack;   //object is part of window object, so this works :)
+            enemyHealth = window[enemyChar].health;
+            gameStart--;
+            console.log(enemyChar);
+            console.log(enemyAttack);
+            console.log(enemyHealth);
+            window[enemyChar].display.addClass("d-none"); 
+            //make attack button appear
+
+        }
     }
     else
-        alert("Please use attack or reset button to continue.")
+        alert("Please use the attack or reset button to continue.")
 });
+
+//if attack button is pressed
+$("button").on("click",function() {
+
+    if(gameStart !== 0) //should attack button be pressed?
+        alert("Please select an enemy or attacker before preceeding.");
+    resolveAttack();
+});
+
+
 
