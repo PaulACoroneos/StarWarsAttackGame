@@ -25,3 +25,6 @@ header {
 h5 {
     font-size: 30px;
 }
+.card-body {
+    padding:0.25rem;
+}

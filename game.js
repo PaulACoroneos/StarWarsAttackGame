@@ -10,10 +10,10 @@ var userAlive = true;
 var gameStart = 2;
 
 //create character objects
-var obiwan = {attack:15, health:120, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena"),enemydisplay:$(".obiwan-enemy")};
-var luke = {attack:20, health:100, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena"),enemydisplay:$(".luke-enemy") };
-var maul = {attack:10, health:150, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena"),enemydisplay:$(".maul-enemy")};
-var sidious = {attack:5, health:180, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena"),enemydisplay:$(".sidious-enemy")};
+var obiwan = {attack:4, health:150, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena"),enemydisplay:$(".obiwan-enemy")};
+var luke = {attack:5, health:140, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena"),enemydisplay:$(".luke-enemy") };
+var maul = {attack:3, health:180, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena"),enemydisplay:$(".maul-enemy")};
+var sidious = {attack:4, health:140, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena"),enemydisplay:$(".sidious-enemy")};
 
 //One element on page dynamically displays additional information to user.
 var gameStatusDisplay = $("game-status");
@@ -29,8 +29,8 @@ function resolveAttack () {
     5) display user and ememy health
     6) Display message depending on health conditions */
 
-    //increment user character attack by itself
-    userAttack += userAttack;
+    //increment user character attack by its base value
+    userAttack += window[userChar].attack;
     console.log("user attack "+ userAttack);
 
     //do user attack first to determine whether we kill the dueling opponent first
@@ -97,6 +97,10 @@ function resetGame() {
     numEnemies = 3; //3 enemies to fight
     userAlive = true;   
     gameStart = 2;
+    $(".obiwan-health").text(window["obiwan"].health);
+    $(".luke-health").text(window["luke"].health);
+    $(".sidious-health").text(window["sidious"].health);
+    $(".maul-health").text(window["maul"].health);
 }
 //main game loop
 
@@ -107,7 +111,7 @@ $(".card").on("click",function(key) {
     if(gameStart === 2)   //first start
     {
         userChar = this.getAttribute('data-value');  //use object of value of card
-        userAttack = window[userChar].attack;   //object is part of window object, so this works :)
+        //userAttack = window[userChar].attack;   //object is part of window object, so this works :)
         userHealth = window[userChar].health;
         gameStart--;
         console.log(userChar);
