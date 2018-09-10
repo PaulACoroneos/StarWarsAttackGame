@@ -10,10 +10,10 @@ var userAlive = true;
 var gameStart = 2;
 
 //create character objects
-var obiwan = {attack:4, health:150, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena"),enemydisplay:$(".obiwan-enemy")};
-var luke = {attack:5, health:140, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena"),enemydisplay:$(".luke-enemy") };
-var maul = {attack:3, health:180, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena"),enemydisplay:$(".maul-enemy")};
-var sidious = {attack:4, health:140, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena"),enemydisplay:$(".sidious-enemy")};
+var obiwan = {attack:10, counterattack:40,health:100, name:"ObiWan Kenobi",display:$(".obiwan"),fightdisplay:$(".obiwan-arena"),enemydisplay:$(".obiwan-enemy")};
+var luke = {attack:10, counterattack:15,health:140, name: "Luke Skywalker", display:$(".luke"),fightdisplay:$(".luke-arena"),enemydisplay:$(".luke-enemy") };
+var maul = {attack:15, counterattack:10,health:130, name: "Darth Maul",display:$(".maul"),fightdisplay:$(".maul-arena"),enemydisplay:$(".maul-enemy")};
+var sidious = {attack:20, counterattack:20,health:120, name: "Darth Sidious",display:$(".sidious"),fightdisplay:$(".sidious-arena"),enemydisplay:$(".sidious-enemy")};
 
 //One element on page dynamically displays additional information to user.
 var gameStatusDisplay = $("game-status");
@@ -128,7 +128,7 @@ $(".card").on("click",function(key) {
             alert("Please select a character that is not yours.")
         else {
             enemyChar = this.getAttribute('data-value');  //use object of value of card
-            enemyAttack = window[enemyChar].attack;   //object is part of window object, so this works :)
+            enemyAttack = window[enemyChar].counterattack;   //object is part of window object, so this works :)
             enemyHealth = window[enemyChar].health;
             gameStart--;
             console.log(enemyChar);
@@ -149,7 +149,8 @@ $(".attack").on("click",function() {
 
     if(gameStart !== 0) //should attack button be pressed?
         alert("Please select an enemy or attacker before preceeding.");
-    resolveAttack();
+    else
+        resolveAttack();
 });
 
 //if reset button is pressed
