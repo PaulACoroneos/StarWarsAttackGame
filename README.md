@@ -1,6 +1,14 @@
-Star Wars RPG
+#Star Wars RPG
 
-This is a small game using HTML,CSS,Bootstrap,JS and JQuery. Four combantants are defined with visible health amounts.
+## Technologies Used
+* HTML
+* CSS
+* JavaScript
+* Bootstrap
+* JQuery
+
+## Description
+Four combantants are defined with visible health amounts.
 They each have a hidden attack and counter-attack value. The game starts with the user selecting one of the four
 pre-defined characters. The user will then select another of the remaining 3 characters. An attack button will then
 appear. The user then uses the attack button to attack the opponent. The attack value of the selected character that
