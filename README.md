@@ -1,4 +1,4 @@
-#Star Wars RPG
+# Star Wars RPG
 
 ## Technologies Used
 * HTML
